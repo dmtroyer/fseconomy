@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_17_185325) do
+ActiveRecord::Schema.define(version: 2018_05_17_194917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,33 @@ ActiveRecord::Schema.define(version: 2018_05_17_185325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_aircraft_models_on_name"
+  end
+
+  create_table "aircrafts", force: :cascade do |t|
+    t.integer "serial_number"
+    t.string "registration"
+    t.bigint "aircraft_model_id"
+    t.string "owner"
+    t.bigint "current_airport_id"
+    t.bigint "home_airport_id"
+    t.decimal "sale_price"
+    t.integer "equipment_type"
+    t.decimal "rental_cost_dry"
+    t.decimal "rental_cost_wet"
+    t.integer "bonus"
+    t.integer "rental_time"
+    t.string "rented_by"
+    t.decimal "fuel_pct"
+    t.boolean "needs_repair"
+    t.integer "airframe_time"
+    t.integer "engine_time"
+    t.integer "time_last_100hr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aircraft_model_id"], name: "index_aircrafts_on_aircraft_model_id"
+    t.index ["current_airport_id"], name: "index_aircrafts_on_current_airport_id"
+    t.index ["home_airport_id"], name: "index_aircrafts_on_home_airport_id"
+    t.index ["serial_number"], name: "index_aircrafts_on_serial_number"
   end
 
   create_table "airports", force: :cascade do |t|

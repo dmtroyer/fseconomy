@@ -27,4 +27,8 @@ RSpec.describe AircraftModel, type: :model do
       should define_enum_for(:fuel_type).with([:'100LL', :JetA])
     end
   end
+
+  describe 'associations' do
+    it { should have_many(:aircraft) }
+  end
 end
