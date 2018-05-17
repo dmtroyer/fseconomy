@@ -14,6 +14,7 @@ RSpec.describe Airport, type: :model do
     end
 
     it 'must be unique' do
+      # This validate_uniqueness_of matcher needs a record in the database
       create :airport
       should validate_uniqueness_of(:code)
     end
