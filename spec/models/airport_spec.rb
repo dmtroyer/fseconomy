@@ -1,19 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Airport, type: :model do
+  let(:airport) { build :airport }
+
   describe 'code' do
-    let(:airport) { build :airport }
-
-    it 'can be 1 to 4 characters' do
-      airport.code = '1234'
-      expect(airport).to be_valid
-      airport.code = '1'
-      expect(airport).to be_valid
-    end
-
-    it 'cannot be more than 4 characters' do
-      airport.code = '12345'
-      expect(airport).to_not be_valid
+    it 'must be between 1 and 4 characters' do
+      should validate_length_of(:code).is_at_least(1).is_at_most(4)
     end
 
     it 'cannot be null' do
@@ -22,12 +14,14 @@ RSpec.describe Airport, type: :model do
     end
 
     it 'must be unique' do
-      airport.code = 'KPIT'
-      airport.save
+      create :airport
+      should validate_uniqueness_of(:code)
+    end
+  end
 
-      expect {
-        create :airport, code: 'KPIT'
-      }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Code has already been taken")
+  describe 'type' do
+    it 'has the enums' do
+      should define_enum_for(:type).with([:civil, :military, :water])
     end
   end
 end
