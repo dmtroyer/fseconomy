@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_17_164238) do
+ActiveRecord::Schema.define(version: 2018_05_17_173245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2018_05_17_164238) do
   create_table "airports", force: :cascade do |t|
     t.string "code", limit: 4, null: false
     t.decimal "lat"
-    t.decimal "long"
+    t.decimal "lng"
     t.integer "size"
     t.string "name"
     t.string "city"
