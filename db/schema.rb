@@ -10,10 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_17_173245) do
+ActiveRecord::Schema.define(version: 2018_05_17_185325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "aircraft_models", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "additional_crew"
+    t.integer "seats"
+    t.integer "passengers"
+    t.integer "cruise_speed"
+    t.integer "num_engines"
+    t.integer "gph"
+    t.integer "fuel_volume"
+    t.integer "fuel_type"
+    t.integer "payload"
+    t.decimal "endurance_distance"
+    t.decimal "endurance_hours"
+    t.decimal "cost_per_nm"
+    t.integer "mtow"
+    t.integer "empty_weight"
+    t.decimal "base_price"
+    t.datetime "last_fse_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_aircraft_models_on_name"
+  end
 
   create_table "airports", force: :cascade do |t|
     t.string "code", limit: 4, null: false
