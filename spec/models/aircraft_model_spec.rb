@@ -21,4 +21,10 @@ RSpec.describe AircraftModel, type: :model do
     end
 
   end
+
+  describe 'fuel_type' do
+    it 'has the enums' do
+      should define_enum_for(:fuel_type).with([:'100LL', :JetA])
+    end
+  end
 end
