@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_144857) do
+ActiveRecord::Schema.define(version: 2018_05_18_171028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_144857) do
     t.datetime "last_fse_update"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "icao_code", limit: 4, null: false
     t.index ["name"], name: "index_aircraft_models_on_name"
   end
 
@@ -68,7 +69,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_144857) do
   end
 
   create_table "airports", force: :cascade do |t|
-    t.string "code", limit: 4, null: false
+    t.string "icao_code", limit: 4, null: false
     t.decimal "lat"
     t.decimal "lng"
     t.integer "size"
@@ -79,7 +80,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_144857) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "type"
-    t.index ["code"], name: "index_airports_on_code"
+    t.index ["icao_code"], name: "index_airports_on_icao_code"
   end
 
   add_foreign_key "aircrafts", "aircraft_models"

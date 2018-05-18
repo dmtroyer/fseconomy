@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+if Rails.env.development?
+  c172 = AircraftModel.create(name: 'Cessna 172 Skyhawk', icao_code: 'C172')
+end

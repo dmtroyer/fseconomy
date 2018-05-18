@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :airport do
-    code 'KPIT'
+    icao_code 'KPIT'
   end
 end

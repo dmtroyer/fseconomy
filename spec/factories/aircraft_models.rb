@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :aircraft_model do
     name "Cessna 172 Skyhawk"
+    icao_code "C172"
     additional_crew 0
     seats 4
     passengers 3
