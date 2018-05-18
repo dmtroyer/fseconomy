@@ -7,6 +7,6 @@ class Aircraft < ApplicationRecord
   belongs_to :home_airport, class_name: 'Airport'
 
   def rentable?
-    rental_cost_dry > 0 && !needs_repair
+    rental_cost_dry > 0 && !needs_repair && !rented_by
   end
 end

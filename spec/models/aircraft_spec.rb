@@ -23,21 +23,31 @@ RSpec.describe Aircraft, type: :model do
 
   describe 'rentable' do
 
-    it 'is rentable if the dry rental cost is greater than zero and it does not need repairs' do
+    it 'is rentable if the dry rental cost is greater than zero, it does not need repairs and is not rented by someone else' do
       aircraft.rental_cost_dry = 1.0
       aircraft.needs_repair = false
+      aircraft.rented_by = nil
       expect(aircraft).to be_rentable
     end
 
     it 'is not rentable if it needs repairs' do
       aircraft.rental_cost_dry = 1.0
       aircraft.needs_repair = true
+      aircraft.rented_by = nil
       expect(aircraft).to_not be_rentable
     end
 
     it 'is not rentable if it has a zero rental cost' do
       aircraft.rental_cost_dry = 0.0
       aircraft.needs_repair = false
+      aircraft.rented_by = nil
+      expect(aircraft).to_not be_rentable
+    end
+
+    it 'is not rentable if it is rented by someone else' do
+      aircraft.rental_cost_dry = 1.0
+      aircraft.needs_repair = false
+      aircraft.rented_by = 'Jane Doe'
       expect(aircraft).to_not be_rentable
     end
 
