@@ -3,12 +3,22 @@ require 'rails_helper'
 RSpec.describe Aircraft, type: :model do
   let(:aircraft) { build :aircraft }
 
-  it 'must have rental dry cost' do
-    should validate_presence_of(:rental_cost_dry)
-  end
+  describe 'validations' do
+    it 'must have rental dry cost' do
+      should validate_presence_of(:rental_cost_dry)
+    end
 
-  it 'must have a needs repair flag' do
-    should validate_presence_of(:needs_repair)
+    it 'must have a needs repair flag' do
+      should validate_presence_of(:needs_repair)
+    end
+
+    it 'must have positive dry rental costs' do
+      should validate_numericality_of(:rental_cost_dry).is_greater_than_or_equal_to(0)
+    end
+
+    it 'must have positive wet rental costs' do
+      should validate_numericality_of(:rental_cost_wet).is_greater_than_or_equal_to(0)
+    end
   end
 
   describe 'rentable' do
