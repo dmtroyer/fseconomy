@@ -6,8 +6,6 @@ class Aircraft < ApplicationRecord
   belongs_to :current_airport, class_name: 'Airport'
   belongs_to :home_airport, class_name: 'Airport'
 
-  enum equipment_type: [:'IFR/AP/GPS']
-
   def rentable?
     rental_cost_dry > 0 && !needs_repair
   end
