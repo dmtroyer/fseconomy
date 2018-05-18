@@ -5,9 +5,7 @@ RSpec.describe AircraftModel, type: :model do
 
   describe 'name' do
 
-    it 'must be present' do
-      should validate_presence_of(:name)
-    end
+    it { is_expected.to validate_presence_of(:name) }
 
     it 'cannot be blank' do
       aircraft_model.name = ''
@@ -17,18 +15,16 @@ RSpec.describe AircraftModel, type: :model do
     it 'must be unique' do
       # This validate_uniqueness_of matcher needs a record in the database
       create :aircraft_model
-      should validate_uniqueness_of(:name)
+      is_expected.to validate_uniqueness_of(:name)
     end
 
   end
 
   describe 'fuel_type' do
-    it 'has the enums' do
-      should define_enum_for(:fuel_type).with([:'100LL', :JetA])
-    end
+    it { is_expected.to define_enum_for(:fuel_type).with([:'100LL', :JetA]) }
   end
 
   describe 'associations' do
-    it { should have_many(:aircraft) }
+    it { is_expected.to have_many(:aircraft) }
   end
 end

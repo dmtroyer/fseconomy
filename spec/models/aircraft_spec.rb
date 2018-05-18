@@ -5,19 +5,19 @@ RSpec.describe Aircraft, type: :model do
 
   describe 'validations' do
     it 'must have rental dry cost' do
-      should validate_presence_of(:rental_cost_dry)
+      is_expected.to validate_presence_of(:rental_cost_dry)
     end
 
     it 'must have a needs repair flag' do
-      should validate_presence_of(:needs_repair)
+      is_expected.to validate_presence_of(:needs_repair)
     end
 
     it 'must have positive dry rental costs' do
-      should validate_numericality_of(:rental_cost_dry).is_greater_than_or_equal_to(0)
+      is_expected.to validate_numericality_of(:rental_cost_dry).is_greater_than_or_equal_to(0)
     end
 
     it 'must have positive wet rental costs' do
-      should validate_numericality_of(:rental_cost_wet).is_greater_than_or_equal_to(0)
+      is_expected.to validate_numericality_of(:rental_cost_wet).is_greater_than_or_equal_to(0)
     end
   end
 
@@ -55,11 +55,11 @@ RSpec.describe Aircraft, type: :model do
 
   describe 'associations' do
 
-    it { should belong_to(:aircraft_model) }
+    it { is_expected.to belong_to(:aircraft_model) }
 
-    it { should belong_to(:current_airport).class_name('Airport') }
+    it { is_expected.to belong_to(:current_airport).class_name('Airport') }
 
-    it { should belong_to(:home_airport).class_name('Airport') }
+    it { is_expected.to belong_to(:home_airport).class_name('Airport') }
 
   end
 end
