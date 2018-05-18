@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_141715) do
+ActiveRecord::Schema.define(version: 2018_05_18_144857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,4 +82,5 @@ ActiveRecord::Schema.define(version: 2018_05_18_141715) do
     t.index ["code"], name: "index_airports_on_code"
   end
 
+  add_foreign_key "aircrafts", "aircraft_models"
 end

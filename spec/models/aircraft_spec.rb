@@ -57,10 +57,9 @@ RSpec.describe Aircraft, type: :model do
 
     it { should belong_to(:aircraft_model) }
 
-    # @TODO need to figure out these relationships
-    # it { should belong_to(:current_airport) }
+    it { should belong_to(:current_airport).class_name('Airport') }
 
-    # it { should belong_to(:home_airport) }
+    it { should belong_to(:home_airport).class_name('Airport') }
 
   end
 end

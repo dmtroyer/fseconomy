@@ -5,7 +5,7 @@ RSpec.describe Airport, type: :model do
 
   describe 'code' do
     it 'must be between 1 and 4 characters' do
-      should validate_length_of(:code).is_at_least(1).is_at_most(4)
+      is_expected.to validate_length_of(:code).is_at_least(1).is_at_most(4)
     end
 
     it 'cannot be null' do
@@ -16,13 +16,21 @@ RSpec.describe Airport, type: :model do
     it 'must be unique' do
       # This validate_uniqueness_of matcher needs a record in the database
       create :airport
-      should validate_uniqueness_of(:code)
+      is_expected.to validate_uniqueness_of(:code)
     end
   end
 
   describe 'type' do
     it 'has the enums' do
-      should define_enum_for(:type).with([:civil, :military, :water])
+      is_expected.to define_enum_for(:type).with([:civil, :military, :water])
+    end
+  end
+
+  describe 'associations' do
+    it do
+      is_expected.to have_many(:current_aircraft)
+                     .class_name('Aircraft')
+                     .inverse_of('current_airport')
     end
   end
 end
