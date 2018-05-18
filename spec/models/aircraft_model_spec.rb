@@ -37,6 +37,12 @@ RSpec.describe AircraftModel, type: :model do
 
   end
 
+  describe 'to_param' do
+    it 'returns the icao code' do
+      expect(aircraft_model.to_param).to equal(aircraft_model.icao_code)
+    end
+  end
+
   describe 'fuel_type' do
     it { is_expected.to define_enum_for(:fuel_type).with([:'100LL', :JetA]) }
   end

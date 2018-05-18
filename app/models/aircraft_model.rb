@@ -6,4 +6,8 @@ class AircraftModel < ApplicationRecord
   has_many :aircraft
 
   enum fuel_type: [:'100LL', :JetA]
+
+  def to_param
+    icao_code
+  end
 end

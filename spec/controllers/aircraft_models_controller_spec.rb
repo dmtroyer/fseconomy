@@ -43,17 +43,17 @@ RSpec.describe AircraftModelsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      aircraft_model = AircraftModel.create! valid_attributes
+      aircraft_model = create :aircraft_model
       get :index, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
   describe "GET #show" do
     it "returns a success response" do
-      aircraft_model = AircraftModel.create! valid_attributes
-      get :show, params: {id: aircraft_model.to_param}, session: valid_session
-      expect(response).to be_success
+      aircraft_model = create :aircraft_model
+      get :show, params: { icao_code: aircraft_model.to_param }, session: valid_session
+      expect(response).to be_successful
     end
   end
 

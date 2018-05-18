@@ -8,7 +8,7 @@ class AircraftModelsController < ApplicationController
     render json: @aircraft_models
   end
 
-  # GET /aircraft_models/1
+  # GET /aircraft_models/C172
   def show
     render json: @aircraft_model
   end
@@ -24,7 +24,7 @@ class AircraftModelsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /aircraft_models/1
+  # PATCH/PUT /aircraft_models/C172
   def update
     if @aircraft_model.update(aircraft_model_params)
       render json: @aircraft_model
@@ -33,7 +33,7 @@ class AircraftModelsController < ApplicationController
     end
   end
 
-  # DELETE /aircraft_models/1
+  # DELETE /aircraft_models/C172
   def destroy
     @aircraft_model.destroy
   end
@@ -41,7 +41,7 @@ class AircraftModelsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_aircraft_model
-      @aircraft_model = AircraftModel.find(params[:id])
+      @aircraft_model = AircraftModel.find_by(icao_code: params[:icao_code])
     end
 
     # Only allow a trusted parameter "white list" through.
