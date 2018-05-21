@@ -8,5 +8,15 @@
 
 
 if Rails.env.development?
-  c172 = AircraftModel.create(name: 'Cessna 172 Skyhawk', icao_code: 'C172')
+  KVBW = Airport.find_or_initialize_by(name: 'Bridgewater Airpark', icao_code: 'KVBW')
+  C172 = AircraftModel.find_or_initialize_by(name: 'Cessna 172 Skyhawk', icao_code: 'C172')
+  Aircraft.create! do |aircraft|
+    aircraft.registration = 'N137DT'
+    aircraft.aircraft_model = C172
+    aircraft.home_airport = KVBW
+    aircraft.current_airport = KVBW
+    aircraft.needs_repair = false
+    aircraft.rental_cost_dry = 100
+    aircraft.rental_cost_wet = 200
+  end
 end
