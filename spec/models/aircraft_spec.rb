@@ -11,6 +11,10 @@ RSpec.describe Aircraft, type: :model do
     it 'must have positive wet rental costs' do
       is_expected.to validate_numericality_of(:rental_cost_wet).is_greater_than_or_equal_to(0)
     end
+
+    it 'must have a needs repair flag' do
+      is_expected.to validate_inclusion_of(:needs_repair).in_array([true, false])
+    end
   end
 
   describe 'rentable' do
