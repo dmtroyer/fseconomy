@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_171028) do
+ActiveRecord::Schema.define(version: 2018_05_21_205717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 2018_05_18_171028) do
     t.bigint "current_airport_id"
     t.bigint "home_airport_id"
     t.decimal "sale_price"
-    t.decimal "rental_cost_dry"
-    t.decimal "rental_cost_wet"
+    t.integer "rental_cost_dry"
+    t.integer "rental_cost_wet"
     t.integer "bonus"
     t.integer "rental_time"
     t.string "rented_by"

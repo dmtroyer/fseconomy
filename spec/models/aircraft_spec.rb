@@ -4,14 +4,6 @@ RSpec.describe Aircraft, type: :model do
   let(:aircraft) { build :aircraft }
 
   describe 'validations' do
-    it 'must have rental dry cost' do
-      is_expected.to validate_presence_of(:rental_cost_dry)
-    end
-
-    it 'must have a needs repair flag' do
-      is_expected.to validate_presence_of(:needs_repair)
-    end
-
     it 'must have positive dry rental costs' do
       is_expected.to validate_numericality_of(:rental_cost_dry).is_greater_than_or_equal_to(0)
     end
