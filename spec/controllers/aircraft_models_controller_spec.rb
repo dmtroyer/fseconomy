@@ -29,11 +29,17 @@ RSpec.describe AircraftModelsController, type: :controller do
   # AircraftModel. As you add validations to AircraftModel, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: 'Cessna 172 Skyhawk',
+      icao_code: 'C172'
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      seats: 5,
+      icao_code: ''
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -61,13 +67,13 @@ RSpec.describe AircraftModelsController, type: :controller do
     context "with valid params" do
       it "creates a new AircraftModel" do
         expect {
-          post :create, params: {aircraft_model: valid_attributes}, session: valid_session
+          post :create, params: { aircraft_model: valid_attributes }, session: valid_session
         }.to change(AircraftModel, :count).by(1)
       end
 
       it "renders a JSON response with the new aircraft_model" do
 
-        post :create, params: {aircraft_model: valid_attributes}, session: valid_session
+        post :create, params: { aircraft_model: valid_attributes } , session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
         expect(response.location).to eq(aircraft_model_url(AircraftModel.last))
@@ -87,20 +93,24 @@ RSpec.describe AircraftModelsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: 'Skymaster 172SP',
+          seats: 4
+        }
       }
 
       it "updates the requested aircraft_model" do
-        aircraft_model = AircraftModel.create! valid_attributes
-        put :update, params: {id: aircraft_model.to_param, aircraft_model: new_attributes}, session: valid_session
+        aircraft_model = create :aircraft_model, valid_attributes
+        put :update, params: { icao_code: aircraft_model.to_param, aircraft_model: new_attributes }, session: valid_session
         aircraft_model.reload
-        skip("Add assertions for updated state")
+        expect(aircraft_model.name).to eq('Skymaster 172SP')
+        expect(aircraft_model.seats).to eq(4)
       end
 
       it "renders a JSON response with the aircraft_model" do
-        aircraft_model = AircraftModel.create! valid_attributes
+        aircraft_model = create :aircraft_model, valid_attributes
 
-        put :update, params: {id: aircraft_model.to_param, aircraft_model: valid_attributes}, session: valid_session
+        put :update, params: { icao_code: aircraft_model.to_param, aircraft_model: valid_attributes }, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
@@ -108,9 +118,9 @@ RSpec.describe AircraftModelsController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the aircraft_model" do
-        aircraft_model = AircraftModel.create! valid_attributes
+        aircraft_model = create :aircraft_model, valid_attributes
 
-        put :update, params: {id: aircraft_model.to_param, aircraft_model: invalid_attributes}, session: valid_session
+        put :update, params: { icao_code: aircraft_model.to_param, aircraft_model: invalid_attributes }, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -119,9 +129,9 @@ RSpec.describe AircraftModelsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested aircraft_model" do
-      aircraft_model = AircraftModel.create! valid_attributes
+      aircraft_model = create :aircraft_model, valid_attributes
       expect {
-        delete :destroy, params: {id: aircraft_model.to_param}, session: valid_session
+        delete :destroy, params: { icao_code: aircraft_model.to_param }, session: valid_session
       }.to change(AircraftModel, :count).by(-1)
     end
   end

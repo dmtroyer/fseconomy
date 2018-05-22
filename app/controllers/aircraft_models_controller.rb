@@ -46,6 +46,10 @@ class AircraftModelsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def aircraft_model_params
-      params.require(:aircraft_model).permit(:name, :additional_crew, :seats, :passengers, :cruise, :engines, :gph, :total_fuel, :payload, :endurance_distance, :endurance_hours, :cost_per_nm, :mtow, :empty_weight, :base_price)
+      params.require(:aircraft_model)
+            .permit(:name, :icao_code, :additional_crew, :seats, :passengers,
+                    :cruise, :engines, :gph, :total_fuel, :payload,
+                    :endurance_distance, :endurance_hours, :cost_per_nm,
+                    :mtow, :empty_weight, :base_price)
     end
 end
