@@ -17,6 +17,12 @@ RSpec.describe Aircraft, type: :model do
     end
   end
 
+  describe 'icao_code' do
+    it 'is the aircraft models icao code' do
+      expect(aircraft.icao_code).to eq(aircraft.aircraft_model.icao_code)
+    end
+  end
+
   describe 'rentable' do
 
     it 'is rentable if the dry rental cost is greater than zero, it does not need repairs and is not rented by someone else' do

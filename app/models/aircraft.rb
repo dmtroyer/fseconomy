@@ -6,6 +6,10 @@ class Aircraft < ApplicationRecord
   belongs_to :current_airport, class_name: 'Airport'
   belongs_to :home_airport, class_name: 'Airport'
 
+  def icao_code
+    aircraft_model.icao_code
+  end
+
   def rentable?
     (rental_cost_dry > 0 || rental_cost_wet > 0) && !needs_repair && !rented_by
   end
