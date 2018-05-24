@@ -3,8 +3,10 @@ class AircraftsController < ApplicationController
 
   # GET /aircrafts
   def index
-    @aircrafts = Aircraft.all
-
+    where_clause = {
+      aircraft_models: { icao_code: params[:aircraft_model_icao_code] }
+    }
+    @aircrafts = Aircraft.joins(:aircraft_model).where(where_clause)
     render json: @aircrafts
   end
 
@@ -15,7 +17,8 @@ class AircraftsController < ApplicationController
 
   # POST /aircrafts
   def create
-    @aircraft = Aircraft.new(aircraft_params)
+    model = AircraftModel.find_by(icao_code: params[:aircraft_model_icao_code])
+    @aircraft = Aircraft.new(aircraft_params.merge(aircraft_model: model))
 
     if @aircraft.save
       render json: @aircraft, status: :created, location: @aircraft
@@ -46,6 +49,12 @@ class AircraftsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def aircraft_params
-      params.require(:aircraft).permit(:serial_number, :registration, :aircraft_model_id, :owner, :sale_price, :equipment_type, :rental_cost_dry, :rental_cost_wet, :rental_type, :bonus, :rental_time, :rented_by, :fuel_pct, :needs_repair, :airframe_time, :engine_time, :time_last_100hr)
+      permitted_params = [
+        :serial_number, :registration, :owner, :sale_price, :equipment_type,
+        :rental_cost_dry, :rental_cost_wet, :rental_type, :bonus, :rental_time,
+        :rented_by, :fuel_pct, :needs_repair, :airframe_time, :engine_time,
+        :time_last_100hr, :home_airport_id, :current_airport_id
+      ]
+      params.require(:aircraft).permit(permitted_params)
     end
 end

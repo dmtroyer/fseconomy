@@ -1,9 +1,12 @@
 FactoryBot.define do
   factory :aircraft do
     serial_number 1
-    registration "N137DT"
+    registration 'N137DT'
     aircraft_model
-    rental_cost_dry "100.00"
+    association :current_airport, factory: :airport, icao_code: 'KPIT'
+    association :home_airport, factory: :airport, icao_code: 'KAGC'
+    rental_cost_dry 100
+    rental_cost_wet 150
     needs_repair false
   end
 end

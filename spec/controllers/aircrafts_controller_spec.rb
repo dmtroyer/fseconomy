@@ -29,11 +29,19 @@ RSpec.describe AircraftsController, type: :controller do
   # Aircraft. As you add validations to Aircraft, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      registration: 'N137DT',
+      rental_cost_dry: 100,
+      rental_cost_wet: 150,
+      needs_repair: false
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      registration: 'N137DT',
+      rental_cost_dry: -100
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -43,31 +51,53 @@ RSpec.describe AircraftsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      aircraft = Aircraft.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(response).to be_success
+      aircraft = create :aircraft
+      get :index, params: { aircraft_model_icao_code: aircraft.icao_code }, session: valid_session
+      expect(response).to be_successful
     end
   end
 
   describe "GET #show" do
     it "returns a success response" do
-      aircraft = Aircraft.create! valid_attributes
-      get :show, params: {id: aircraft.to_param}, session: valid_session
-      expect(response).to be_success
+      aircraft = create :aircraft
+      get :show, params: { id: aircraft.to_param }, session: valid_session
+      expect(response).to be_successful
     end
   end
 
   describe "POST #create" do
+    let(:aircraft_model) {
+      create :aircraft_model, icao_code: 'C172', name: 'Cessna 172 Skyhawk'
+    }
+
+    let(:kpit) {
+      create :airport, icao_code: 'KPIT'
+    }
+
+    let(:kagc) {
+      create :airport, icao_code: 'KAGC'
+    }
+
     context "with valid params" do
+      let(:params) {
+        {
+          aircraft_model_icao_code: aircraft_model.icao_code,
+          aircraft: valid_attributes.merge({
+            home_airport_id: kpit.id,
+            current_airport_id: kagc.id
+          })
+        }
+      }
+
       it "creates a new Aircraft" do
         expect {
-          post :create, params: {aircraft: valid_attributes}, session: valid_session
+          post :create, params: params, session: valid_session
         }.to change(Aircraft, :count).by(1)
       end
 
       it "renders a JSON response with the new aircraft" do
 
-        post :create, params: {aircraft: valid_attributes}, session: valid_session
+        post :create, params: params, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
         expect(response.location).to eq(aircraft_url(Aircraft.last))
@@ -76,8 +106,11 @@ RSpec.describe AircraftsController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the new aircraft" do
-
-        post :create, params: {aircraft: invalid_attributes}, session: valid_session
+        params = {
+          aircraft_model_icao_code: aircraft_model.icao_code,
+          aircraft: invalid_attributes
+        }
+        post :create, params: params, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -87,20 +120,28 @@ RSpec.describe AircraftsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          registration: 'N138DT',
+          rental_cost_dry: 120,
+          rental_cost_wet: 170,
+          needs_repair: true
+        }
       }
 
       it "updates the requested aircraft" do
-        aircraft = Aircraft.create! valid_attributes
-        put :update, params: {id: aircraft.to_param, aircraft: new_attributes}, session: valid_session
+        aircraft = create :aircraft, valid_attributes
+        put :update, params: { id: aircraft.to_param, aircraft: new_attributes }, session: valid_session
         aircraft.reload
-        skip("Add assertions for updated state")
+        expect(aircraft.registration).to eq('N138DT')
+        expect(aircraft.rental_cost_dry).to eq(120)
+        expect(aircraft.rental_cost_wet).to eq(170)
+        expect(aircraft.needs_repair).to be true
       end
 
       it "renders a JSON response with the aircraft" do
-        aircraft = Aircraft.create! valid_attributes
+        aircraft = create :aircraft, valid_attributes
 
-        put :update, params: {id: aircraft.to_param, aircraft: valid_attributes}, session: valid_session
+        put :update, params: { id: aircraft.to_param, aircraft: valid_attributes }, session: valid_session
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json')
       end
@@ -108,9 +149,9 @@ RSpec.describe AircraftsController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the aircraft" do
-        aircraft = Aircraft.create! valid_attributes
+        aircraft = create :aircraft, valid_attributes
 
-        put :update, params: {id: aircraft.to_param, aircraft: invalid_attributes}, session: valid_session
+        put :update, params: { id: aircraft.to_param, aircraft: invalid_attributes }, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
@@ -119,9 +160,9 @@ RSpec.describe AircraftsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested aircraft" do
-      aircraft = Aircraft.create! valid_attributes
+      aircraft = create :aircraft, valid_attributes
       expect {
-        delete :destroy, params: {id: aircraft.to_param}, session: valid_session
+        delete :destroy, params: { id: aircraft.to_param }, session: valid_session
       }.to change(Aircraft, :count).by(-1)
     end
   end
