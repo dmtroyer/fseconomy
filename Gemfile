@@ -39,6 +39,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman', '~> 0.84.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
