@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_30_175340) do
+ActiveRecord::Schema.define(version: 2018_05_30_204057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,16 +19,11 @@ ActiveRecord::Schema.define(version: 2018_05_30_175340) do
     t.string "name", null: false
     t.integer "additional_crew"
     t.integer "seats"
-    t.integer "passengers"
     t.integer "cruise_speed"
     t.integer "num_engines"
     t.integer "gph"
     t.integer "fuel_volume"
     t.integer "fuel_type"
-    t.integer "payload"
-    t.decimal "endurance_distance"
-    t.decimal "endurance_hours"
-    t.decimal "cost_per_nm"
     t.integer "mtow"
     t.integer "empty_weight"
     t.decimal "base_price"
@@ -36,6 +31,7 @@ ActiveRecord::Schema.define(version: 2018_05_30_175340) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "icao_code", limit: 4, null: false
+    t.decimal "engine_price"
     t.index ["name"], name: "index_aircraft_models_on_name"
   end
 
