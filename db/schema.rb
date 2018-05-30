@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_21_205717) do
+ActiveRecord::Schema.define(version: 2018_05_30_175340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2018_05_21_205717) do
     t.decimal "sale_price"
     t.integer "rental_cost_dry"
     t.integer "rental_cost_wet"
-    t.integer "bonus"
+    t.integer "distance_bonus"
     t.integer "rental_time"
     t.string "rented_by"
     t.decimal "fuel_pct"

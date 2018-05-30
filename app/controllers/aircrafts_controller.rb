@@ -51,9 +51,9 @@ class AircraftsController < ApplicationController
     def aircraft_params
       permitted_params = [
         :serial_number, :registration, :owner, :sale_price, :equipment_type,
-        :rental_cost_dry, :rental_cost_wet, :rental_type, :bonus, :rental_time,
-        :rented_by, :fuel_pct, :needs_repair, :airframe_time, :engine_time,
-        :time_last_100hr, :home_airport_id, :current_airport_id
+        :rental_cost_dry, :rental_cost_wet, :rental_type, :distance_bonus,
+        :rental_time, :rented_by, :fuel_pct, :needs_repair, :airframe_time,
+        :engine_time, :time_last_100hr, :home_airport_id, :current_airport_id
       ]
       params.require(:aircraft).permit(permitted_params)
     end
