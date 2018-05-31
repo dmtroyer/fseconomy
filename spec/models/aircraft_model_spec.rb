@@ -43,6 +43,18 @@ RSpec.describe AircraftModel, type: :model do
     end
   end
 
+  describe 'weights' do
+    it { is_expected.to validate_numericality_of(:mtow).is_greater_than(0) }
+
+    it { is_expected.to validate_numericality_of(:empty_weight).is_greater_than(0) }
+
+    it 'calculates useful_load' do
+      aircraft_model.mtow = 5000
+      aircraft_model.empty_weight = 1000
+      expect(aircraft_model.useful_load).to equal(4000)
+    end
+  end
+
   describe 'fuel_type' do
     it { is_expected.to define_enum_for(:fuel_type).with([:'100LL', :JetA]) }
   end
