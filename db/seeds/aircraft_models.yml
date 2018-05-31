@@ -1,0 +1,44 @@
+- id: 1
+  icao_code: 'C172'
+  name: 'Cessna 172 Skyhawk'
+  additional_crew: 0
+  seats: 4
+  cruise_speed: 100
+  gph: 8
+  fuel_type: '100LL'
+  mtow: 1180
+  empty_weight: 748
+  base_price: 72600.00
+  fuel_volume: 54
+  num_engines: 1
+  engine_price: 22000.00
+
+- id: 22
+  icao_code: 'C208'
+  name: 'Cessna 208 Caravan'
+  additional_crew: 0
+  seats: 14
+  cruise_speed: 182
+  gph: 40
+  fuel_type: 'JetA'
+  mtow: 3985
+  empty_weight: 2075
+  base_price: 657300.00
+  fuel_volume: 332
+  num_engines: 1
+  engine_price: 114000.00
+
+- id: 24
+  icao_code: 'PC12'
+  name: 'Pilatus PC-12'
+  additional_crew: 0
+  seats: 11
+  cruise_speed: 270
+  gph: 45
+  fuel_type: 'JetA'
+  mtow: 4500
+  empty_weight: 2605
+  base_price: 762750.00
+  fuel_volume: 406
+  num_engines: 1
+  engine_price: 114000.00
