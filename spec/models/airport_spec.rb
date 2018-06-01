@@ -22,7 +22,7 @@ RSpec.describe Airport, type: :model do
 
   describe 'type' do
     it 'has the enums' do
-      is_expected.to define_enum_for(:type).with([:civil, :military, :water])
+      is_expected.to define_enum_for(:airport_type).with([:civil, :military, :water])
     end
   end
 
