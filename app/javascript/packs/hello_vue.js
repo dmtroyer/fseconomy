@@ -12,7 +12,7 @@ import VueCurrencyFilter from 'vue-currency-filter/VueCurrencyFilter.js'
 import 'vuetify/dist/vuetify.css'
 
 Vue.use(Vuetify)
-Vue.use(VueCurrencyFilter, { symbol: '$', symbolSpacing: false })
+Vue.use(VueCurrencyFilter, { symbol: '$', symbolSpacing: false, thousandsSeparator: ',' })
 
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.body.appendChild(document.createElement('hello'))

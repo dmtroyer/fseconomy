@@ -71,9 +71,14 @@
         this.aircrafts_loading = true;
         axios
           .get('http://localhost:3000/aircraft_models/' + event + '/aircrafts')
-          .then(response => this.aircrafts = response.data)
-          .catch(error => console.log(error))
-          .finally(this.aircrafts_loading = false);
+          .then(response => {
+            this.aircrafts = response.data;
+            this.aircrafts_loading = false;
+          })
+          .catch(error => {
+            console.log(error);
+            this.aircrafts_loading = false;
+          });
       }
     },
     mounted () {
@@ -85,7 +90,7 @@
               text: aircraft.name + ' - ' + aircraft.icao_code,
               value: aircraft.icao_code
             };
-          });
+          }).sort((a,b) => a.text > b.text);
         })
         .catch(error => console.log(error))
         .finally(this.aircraft_models_loading = false);
