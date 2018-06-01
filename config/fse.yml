@@ -1,0 +1,9 @@
+--- !map:HashWithIndifferentAccess
+
+aircrafts:
+  host: server.fseconomy.net
+  path: /data
+  params:
+    format: xml
+    query: aircraft
+    search: makemodel

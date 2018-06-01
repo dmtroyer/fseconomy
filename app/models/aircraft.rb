@@ -3,7 +3,7 @@ class Aircraft < ApplicationRecord
   validates_inclusion_of :needs_repair, in: [true, false]
 
   belongs_to :aircraft_model
-  belongs_to :current_airport, class_name: 'Airport'
+  belongs_to :current_airport, class_name: 'Airport', optional: true
   belongs_to :home_airport, class_name: 'Airport'
 
   def icao_code
