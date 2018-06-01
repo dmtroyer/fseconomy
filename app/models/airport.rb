@@ -7,5 +7,5 @@ class Airport < ApplicationRecord
   has_many :current_aircraft, class_name: 'Aircraft', inverse_of: 'current_airport'
   has_many :home_aircraft, class_name: 'Aircraft', inverse_of: 'home_airport'
 
-  enum type: [:civil, :military, :water]
+  enum airport_type: [:civil, :military, :water]
 end
