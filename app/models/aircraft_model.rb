@@ -6,6 +6,7 @@ class AircraftModel < ApplicationRecord
 
   has_many :aircraft
 
+  enum fse_update_frequency: [:never, :hourly, :daily]
   enum fuel_type: [:'100LL', :JetA]
 
   def useful_load

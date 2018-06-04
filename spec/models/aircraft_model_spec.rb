@@ -62,4 +62,8 @@ RSpec.describe AircraftModel, type: :model do
   describe 'associations' do
     it { is_expected.to have_many(:aircraft) }
   end
+
+  describe 'fse update frequency' do
+    it { is_expected.to define_enum_for(:fse_update_frequency).with([:never, :hourly, :daily]) }
+  end
 end

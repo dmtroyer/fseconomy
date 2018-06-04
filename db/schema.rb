@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_01_204048) do
+ActiveRecord::Schema.define(version: 2018_06_04_200453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2018_06_01_204048) do
     t.datetime "updated_at", null: false
     t.string "icao_code", limit: 4, null: false
     t.decimal "engine_price"
+    t.integer "fse_update_frequency", default: 0
+    t.index ["fse_update_frequency"], name: "index_aircraft_models_on_fse_update_frequency"
     t.index ["icao_code"], name: "index_aircraft_models_on_icao_code"
     t.index ["name"], name: "index_aircraft_models_on_name"
   end
