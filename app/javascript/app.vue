@@ -70,7 +70,7 @@
       selectAircraftModel (event) {
         this.aircrafts_loading = true;
         axios
-          .get('http://localhost:3000/aircraft_models/' + event + '/aircrafts')
+          .get('aircraft_models/' + event + '/aircrafts')
           .then(response => {
             this.aircrafts = response.data;
             this.aircrafts_loading = false;
