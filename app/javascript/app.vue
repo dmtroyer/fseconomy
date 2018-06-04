@@ -83,7 +83,7 @@
     },
     mounted () {
       axios
-        .get('http://localhost:3000/aircraft_models')
+        .get('aircraft_models')
         .then(response => {
           this.aircraft_models = response.data.map(aircraft => {
             return {
