@@ -30,7 +30,11 @@ RSpec.describe Airport, type: :model do
     it do
       is_expected.to have_many(:current_aircraft)
                      .class_name('Aircraft')
-                     .inverse_of('current_airport')
+                     .with_foreign_key('current_airport_id')
+
+      is_expected.to have_many(:home_aircraft)
+                     .class_name('Aircraft')
+                     .with_foreign_key('home_airport_id')
     end
   end
 end

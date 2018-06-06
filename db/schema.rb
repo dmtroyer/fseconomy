@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_04_200453) do
+ActiveRecord::Schema.define(version: 2018_06_06_155454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 2018_06_04_200453) do
     t.string "registration"
     t.bigint "aircraft_model_id"
     t.string "owner"
-    t.bigint "current_airport_id"
-    t.bigint "home_airport_id"
+    t.string "current_airport_id"
+    t.string "home_airport_id"
     t.decimal "sale_price"
     t.integer "rental_cost_dry"
     t.integer "rental_cost_wet"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2018_06_04_200453) do
     t.index ["home_airport_id"], name: "index_aircrafts_on_home_airport_id"
   end
 
-  create_table "airports", force: :cascade do |t|
+  create_table "airports", id: false, force: :cascade do |t|
     t.string "icao_code", limit: 4, null: false
     t.decimal "lat"
     t.decimal "lng"

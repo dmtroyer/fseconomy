@@ -8,8 +8,6 @@ class AircraftsImporter
     invalids = []
     xml_doc = Nokogiri::XML(File.open(Rails.root.join('storage', 'fseconomy', 'C172.xml')))
     xml_aircrafts = xml_doc.css('Aircraft')
-    airport_codes = xml_aircrafts.map { |a| [a.css('Location').text, a.css('Home').text] }.flatten.uniq
-    airports = Airport.select(:id, :icao_code).where(icao_code: airport_codes).index_by(&:icao_code)
 
     xml_aircrafts.each do |aircraft|
       aircraft = Aircraft.new(
@@ -17,8 +15,8 @@ class AircraftsImporter
         registration: aircraft.css('Registration').text,
         aircraft_model: model,
         owner: aircraft.css('Owner').text,
-        current_airport: airports[aircraft.css('Location').text],
-        home_airport: airports[aircraft.css('Home').text],
+        current_airport_id: aircraft.css('Location').text,
+        home_airport_id: aircraft.css('Home').text,
         sale_price: aircraft.css('SalePrice').text,
         has_ifr_equipment: aircraft.css('Equipment').text.include?('IFR'),
         has_autopilot: aircraft.css('Equipment').text.include?('AP'),

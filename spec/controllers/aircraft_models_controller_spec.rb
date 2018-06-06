@@ -31,7 +31,9 @@ RSpec.describe AircraftModelsController, type: :controller do
   let(:valid_attributes) {
     {
       name: 'Cessna 172 Skyhawk',
-      icao_code: 'C172'
+      icao_code: 'C172',
+      mtow: 23,
+      empty_weight: 20
     }
   }
 

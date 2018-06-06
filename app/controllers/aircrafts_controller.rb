@@ -1,7 +1,7 @@
 class AircraftsController < ApplicationController
   before_action :set_aircraft, only: [:show, :update, :destroy]
 
-  # GET /aircrafts
+  # GET /aircraft_models/1/aircrafts
   def index
     where_clause = {
       aircraft_models: { icao_code: params[:aircraft_model_icao_code] }
@@ -15,7 +15,7 @@ class AircraftsController < ApplicationController
     render json: @aircraft
   end
 
-  # POST /aircrafts
+  # POST /aircraft_models/1/aircrafts
   def create
     model = AircraftModel.find_by(icao_code: params[:aircraft_model_icao_code])
     @aircraft = Aircraft.new(aircraft_params.merge(aircraft_model: model))
