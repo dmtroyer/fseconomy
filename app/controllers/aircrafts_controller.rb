@@ -7,12 +7,10 @@ class AircraftsController < ApplicationController
       aircraft_models: { icao_code: params[:aircraft_model_icao_code] }
     }
     @aircrafts = Aircraft.joins(:aircraft_model).where(where_clause)
-    render json: @aircrafts
   end
 
   # GET /aircrafts/1
   def show
-    render json: @aircraft
   end
 
   # POST /aircraft_models/1/aircrafts

@@ -4,13 +4,10 @@ class AircraftModelsController < ApplicationController
   # GET /aircraft_models
   def index
     @aircraft_models = AircraftModel.all
-
-    render json: @aircraft_models
   end
 
   # GET /aircraft_models/C172
   def show
-    render json: @aircraft_model
   end
 
   # POST /aircraft_models
