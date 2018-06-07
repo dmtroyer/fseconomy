@@ -18,19 +18,19 @@
               v-on:change="selectAircraftModel"
             ></v-select>
           </v-flex>
-          <v-flex xs4 offset-xs4 text-xs-center>
-            <transition name="fade">
-              <v-card v-if="selected_model" flat>
-                <v-card-text>{{ selected_model.name }} updated {{ selected_model.last_fse_update | moment("from") }}</v-card-text>
-              </v-card>
-            </transition>
+          <v-flex xs4 offset-xs4>
+            <!-- TODO: change this to within a v-card so we can add a filter button -->
+            <!-- https://material.io/design/components/data-tables.html?image=https%3A%2F%2Fmaterial.io%2Fdesign%2Fassets%2F0B3wFuHgbfPkzanpfajUxbDk1Z00%2Fcomponents-datatables-card1.png#tables-within-cards -->
+            <v-switch label="Rentable Only" v-model="rentable_only" hide-details></v-switch>
           </v-flex>
         </v-layout>
         <v-data-table
           :headers="headers"
           :items="aircrafts"
           :loading="aircrafts_loading"
-          :pagination.sync="pagination">
+          :pagination.sync="pagination"
+          search=""
+          :customFilter="customFilter">
           <template slot="items" slot-scope="aircraft">
             <td>{{ aircraft.item.registration }}</td>
             <td>{{ aircraft.item.rental_cost_dry | currency }}</td>
@@ -42,8 +42,12 @@
         </v-data-table>
       </v-container>
     </v-content>
-    <v-footer :color="color" dark :fixed="fixed" app>
+    <v-footer class="pa-3" :color="color" dark :fixed="fixed" app>
       <span>&copy; 2018</span>
+      <v-spacer></v-spacer>
+      <transition name="fade">
+        <span v-if="selected_model">{{ selected_model.name }} {{ selected_model.last_fse_update ? 'was' : 'was never' }} updated from FSE {{ selected_model.last_fse_update | moment("from") }}</span>
+      </transition>
     </v-footer>
   </v-app>
 </template>
@@ -72,17 +76,21 @@
         aircraft_models: [],
         aircrafts_loading: false,
         aircraft_models_loading: true,
-        selected_model: null
+        selected_model: null,
+        rentable_only: true
       }
     },
     methods: {
+      customFilter (items, search, filter) {
+        return items.filter(item => item.rentable === this.rentable_only);
+      },
       fseAirportLink (icao_code) {
         return 'http://server.fseconomy.net/airport.jsp?icao=' + icao_code;
       },
       selectAircraftModel (model) {
         this.aircrafts_loading = true;
         axios
-          .get('aircraft_models/' + model.icao_code + '/aircrafts')
+          .get('aircraft_models/' + model.icao_code + '/aircrafts.json')
           .then(response => {
             this.aircrafts = response.data;
             this.aircrafts_loading = false;
@@ -95,7 +103,7 @@
     },
     mounted () {
       axios
-        .get('aircraft_models')
+        .get('aircraft_models.json')
         .then(response => {
           this.aircraft_models = response.data.map(aircraft => {
             return {
