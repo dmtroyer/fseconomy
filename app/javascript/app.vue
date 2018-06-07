@@ -28,8 +28,8 @@
             <td>{{ aircraft.item.rental_cost_dry | currency }}</td>
             <td>{{ aircraft.item.rental_cost_wet | currency }}</td>
             <td>{{ aircraft.item.distance_bonus | currency }}</td>
-            <td>{{ aircraft.item.current_airport }}</td>
-            <td>{{ aircraft.item.home_airport }}</td>
+            <td><a v-bind:href="fseAirportLink(aircraft.item.current_airport_id)" target="_blank">{{ aircraft.item.current_airport_id }}</a></td>
+            <td><a v-bind:href="fseAirportLink(aircraft.item.home_airport_id)" target="_blank">{{ aircraft.item.home_airport_id }}</a></td>
           </template>
         </v-data-table>
       </v-container>
@@ -53,8 +53,8 @@
           { text: 'Rental Cost (Dry)', value: 'rental_cost_dry' },
           { text: 'Rental Cost (Wet)', value: 'rental_cost_wet' },
           { text: 'Distance Bonus', value: 'distance_bonus' },
-          { text: 'Current Airport', value: 'current_airport' },
-          { text: 'Home Airport', value: 'home_airport' }
+          { text: 'Current Airport', value: 'current_airport', sortable: false },
+          { text: 'Home Airport', value: 'home_airport', sortable: false }
         ],
         pagination: {
           rowsPerPage: 10,
@@ -67,6 +67,9 @@
       }
     },
     methods: {
+      fseAirportLink (icao_code) {
+        return 'http://server.fseconomy.net/airport.jsp?icao=' + icao_code;
+      },
       selectAircraftModel (event) {
         this.aircrafts_loading = true;
         axios
@@ -97,3 +100,9 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  td a {
+    text-decoration: none;
+  }
+</style>

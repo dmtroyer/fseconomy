@@ -1,21 +1,22 @@
+require 'open-uri'
+
 class AircraftsImporter
 
   def self.import(icao_code)
-    model = AircraftModel.select(:id).find_by(icao_code: icao_code)
+    model = AircraftModel.find_by(icao_code: icao_code)
     raise "Cannot find the #{icao_code} model in the database." if model.nil?
 
     aircrafts = []
     invalids = []
-    xml_doc = Nokogiri::XML(File.open(Rails.root.join('storage', 'fseconomy', 'C172.xml')))
-    xml_aircrafts = xml_doc.css('Aircraft')
+    xml_doc = Nokogiri::XML(open(uri(model.name)))
 
-    xml_aircrafts.each do |aircraft|
+    xml_doc.css('Aircraft').each do |aircraft|
       aircraft = Aircraft.new(
         id: aircraft.css('SerialNumber').text,
         registration: aircraft.css('Registration').text,
         aircraft_model: model,
         owner: aircraft.css('Owner').text,
-        current_airport_id: aircraft.css('Location').text,
+        current_airport_id: aircraft.css('Location').text == 'In Flight' ? nil : aircraft.css('Location').text,
         home_airport_id: aircraft.css('Home').text,
         sale_price: aircraft.css('SalePrice').text,
         has_ifr_equipment: aircraft.css('Equipment').text.include?('IFR'),
