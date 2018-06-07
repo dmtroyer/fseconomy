@@ -26,7 +26,7 @@ class AircraftsImporter
         rental_cost_wet: aircraft.css('RentalWet').text,
         distance_bonus: aircraft.css('Bonus').text,
         rental_time: aircraft.css('RentalTime').text,
-        rented_by: aircraft.css('RentedBy').text,
+        rented_by: aircraft.css('RentedBy').text == 'Not rented.' ? nil : aircraft.css('RentedBy').text,
         fuel_pct: aircraft.css('FuelPct').text,
         needs_repair: aircraft.css('NeedsRepair').text,
         airframe_time: fse_time_to_minutes(aircraft.css('AirframeTime').text),
