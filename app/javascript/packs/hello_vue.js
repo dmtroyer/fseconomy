@@ -9,10 +9,12 @@ import Vue from 'vue'
 import App from '../app.vue'
 import Vuetify from 'vuetify'
 import VueCurrencyFilter from 'vue-currency-filter/VueCurrencyFilter.js'
+import VueMoment from 'vue-moment'
 import 'vuetify/dist/vuetify.css'
 
 Vue.use(Vuetify)
 Vue.use(VueCurrencyFilter, { symbol: '$', symbolSpacing: false, thousandsSeparator: ',' })
+Vue.use(VueMoment)
 
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.body.appendChild(document.createElement('hello'))

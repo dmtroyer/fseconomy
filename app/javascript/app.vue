@@ -10,12 +10,20 @@
             <v-select
               label="Aircraft Model"
               :items="aircraft_models"
+              v-model="selected_model"
               :loading="aircraft_models_loading"
               prepend-icon="airplanemode_active"
               single-line
               autocomplete
               v-on:change="selectAircraftModel"
             ></v-select>
+          </v-flex>
+          <v-flex xs4 offset-xs4 text-xs-center>
+            <transition name="fade">
+              <v-card v-if="selected_model" flat>
+                <v-card-text>{{ selected_model.name }} updated {{ selected_model.last_fse_update | moment("from") }}</v-card-text>
+              </v-card>
+            </transition>
           </v-flex>
         </v-layout>
         <v-data-table
@@ -63,17 +71,18 @@
         aircrafts: [],
         aircraft_models: [],
         aircrafts_loading: false,
-        aircraft_models_loading: true
+        aircraft_models_loading: true,
+        selected_model: null
       }
     },
     methods: {
       fseAirportLink (icao_code) {
         return 'http://server.fseconomy.net/airport.jsp?icao=' + icao_code;
       },
-      selectAircraftModel (event) {
+      selectAircraftModel (model) {
         this.aircrafts_loading = true;
         axios
-          .get('aircraft_models/' + event + '/aircrafts')
+          .get('aircraft_models/' + model.icao_code + '/aircrafts')
           .then(response => {
             this.aircrafts = response.data;
             this.aircrafts_loading = false;
@@ -91,7 +100,7 @@
           this.aircraft_models = response.data.map(aircraft => {
             return {
               text: aircraft.name + ' - ' + aircraft.icao_code,
-              value: aircraft.icao_code
+              value: aircraft
             };
           }).sort((a,b) => a.text > b.text);
         })
@@ -104,5 +113,11 @@
 <style lang="scss" scoped>
   td a {
     text-decoration: none;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 </style>
