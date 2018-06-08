@@ -64,6 +64,9 @@ RSpec.describe AircraftModel, type: :model do
   end
 
   describe 'fse update frequency' do
-    it { is_expected.to define_enum_for(:fse_update_frequency).with([:never, :hourly, :daily]) }
+    it do
+      is_expected.to define_enum_for(:fse_update_frequency)
+                     .with([:never, :every_ten_minutes, :hourly, :daily])
+    end
   end
 end
