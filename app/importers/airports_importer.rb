@@ -18,7 +18,7 @@ class AirportsImporter
 
     Airport.import!(columns, airports)
 
-    puts "Successfully imported #{airports.count} airports."
+    { airports: airports }
   end
 
 end
