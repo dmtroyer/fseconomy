@@ -52,12 +52,9 @@ class AircraftsImporter
   end
 
   def self.uri(aircraft_name)
-    access_key = ENV['FSE_ACCESS_KEY']
-    raise 'FSE_ACCESS_KEY env variable not present.' unless access_key.present?
-
     yml_path = Rails.root.join('config', 'fse.yml')
-    config = YAML.load(File.read(yml_path))[:aircrafts]
-    params = { userkey: access_key, makemodel: aircraft_name }.merge(config[:params])
+    config = YAML.load(ERB.new(File.read(yml_path)).result)[:aircrafts]
+    params = { makemodel: aircraft_name }.merge(config[:params])
 
     URI::HTTP.build(host: config[:host], path: config[:path], query: params.to_query)
   end

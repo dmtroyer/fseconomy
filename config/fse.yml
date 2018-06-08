@@ -1,16 +1,22 @@
 --- !map:HashWithIndifferentAccess
 
-aircrafts:
+default: &default
   host: server.fseconomy.net
   path: /data
-  params:
+  params: &params
     format: xml
+    userkey: <%= ENV['FSE_ACCESS_KEY'] %>
+
+aircrafts:
+  <<: *default
+  params:
+    <<: *params
     query: aircraft
     search: makemodel
+
 aircraft_models:
-  host: server.fseconomy.net
-  path: /data
+  <<: *default
   params:
-    format: xml
+    <<: *params
     query: aircraft
     search: configs
