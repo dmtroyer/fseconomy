@@ -7,3 +7,10 @@ aircrafts:
     format: xml
     query: aircraft
     search: makemodel
+aircraft_models:
+  host: server.fseconomy.net
+  path: /data
+  params:
+    format: xml
+    query: aircraft
+    search: configs
