@@ -52,7 +52,7 @@ RSpec.describe AircraftsController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       aircraft = create :aircraft
-      get :index, params: { aircraft_model_icao_code: aircraft.icao_code }, session: valid_session
+      get :index, params: { format: 'json', aircraft_model_icao_code: aircraft.icao_code }, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe AircraftsController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       aircraft = create :aircraft
-      get :show, params: { id: aircraft.to_param }, session: valid_session
+      get :show, params: { format: 'json', id: aircraft.to_param }, session: valid_session
       expect(response).to be_successful
     end
   end
