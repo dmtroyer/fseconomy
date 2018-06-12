@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class AircraftsImporter
+class AircraftsImporter < FseImporter
 
   def self.import(icao_code)
     model = AircraftModel.find_by(icao_code: icao_code)
@@ -52,11 +52,7 @@ class AircraftsImporter
   end
 
   def self.uri(aircraft_name)
-    yml_path = Rails.root.join('config', 'fse.yml')
-    config = YAML.load(ERB.new(File.read(yml_path)).result)[:aircrafts]
-    params = { makemodel: aircraft_name }.merge(config[:params])
-
-    URI::HTTP.build(host: config[:host], path: config[:path], query: params.to_query)
+    super(:aircrafts, makemodel: aircraft_name)
   end
 
   def self.fse_time_to_minutes(time)

@@ -1,4 +1,4 @@
-class AircraftModelsImporter
+class AircraftModelsImporter < FseImporter
 
   def self.import(icao_code, name)
     # file_path = Rails.root.join('storage', 'fseconomy', 'aircraft_configs.xml')
@@ -32,13 +32,6 @@ class AircraftModelsImporter
   end
 
   def self.uri
-    access_key = ENV['FSE_ACCESS_KEY']
-    raise 'FSE_ACCESS_KEY env variable not present.' unless access_key.present?
-
-    yml_path = Rails.root.join('config', 'fse.yml')
-    config = YAML.load(File.read(yml_path))[:aircraft_models]
-    params = { userkey: access_key }.merge(config[:params])
-
-    URI::HTTP.build(host: config[:host], path: config[:path], query: params.to_query)
+    super(:aircraft_models)
   end
 end
