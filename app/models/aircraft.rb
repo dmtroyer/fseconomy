@@ -6,6 +6,8 @@ class Aircraft < ApplicationRecord
   belongs_to :current_airport, class_name: 'Airport', optional: true
   belongs_to :home_airport, class_name: 'Airport'
 
+  scope :for_sale, -> { where('sale_price > 0').order(:sale_price) }
+
   def icao_code
     aircraft_model.icao_code
   end
