@@ -13,7 +13,7 @@ RSpec.describe Aircraft, type: :model do
     end
 
     it 'must have a needs repair flag' do
-      is_expected.to validate_inclusion_of(:needs_repair).in_array([true, false])
+      is_expected.to validate_presence_of(:needs_repair)
     end
   end
 

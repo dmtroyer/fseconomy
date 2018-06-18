@@ -1,6 +1,6 @@
 class Aircraft < ApplicationRecord
   validates :rental_cost_dry, :rental_cost_wet, numericality: { greater_than_or_equal_to: 0 }
-  validates_inclusion_of :needs_repair, in: [true, false]
+  validates_presence_of :needs_repair
 
   belongs_to :aircraft_model
   belongs_to :current_airport, class_name: 'Airport', optional: true
