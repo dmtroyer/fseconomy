@@ -12,6 +12,7 @@
   fuel_volume: 54
   num_engines: 1
   engine_price: 22000.00
+  fse_update_frequency: 'hourly'
 
 - id: 22
   icao_code: 'C208'
@@ -27,6 +28,7 @@
   fuel_volume: 332
   num_engines: 1
   engine_price: 114000.00
+  fse_update_frequency: 'daily'
 
 - id: 24
   icao_code: 'PC12'
@@ -42,3 +44,4 @@
   fuel_volume: 406
   num_engines: 1
   engine_price: 114000.00
+  fse_update_frequency: 'hourly'
