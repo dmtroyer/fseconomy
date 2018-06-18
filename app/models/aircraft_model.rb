@@ -9,6 +9,8 @@ class AircraftModel < ApplicationRecord
   enum fse_update_frequency: [:never, :every_ten_minutes, :hourly, :daily]
   enum fuel_type: [:'100LL', :JetA]
 
+  scope :all_report_for_sale, -> { where(report_for_sale: true).order(:icao_code) }
+
   def useful_load
     mtow - empty_weight
   end

@@ -12,6 +12,10 @@ class Aircraft < ApplicationRecord
     aircraft_model.icao_code
   end
 
+  def total_sale_price
+    sale_price + fees_owed
+  end
+
   def rentable?
     (rental_cost_dry > 0 || rental_cost_wet > 0) && !needs_repair && !rented_by
   end

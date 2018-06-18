@@ -19,6 +19,7 @@ class AircraftsImporter < FseImporter
         current_airport_id: aircraft.css('Location').text == 'In Flight' ? nil : aircraft.css('Location').text,
         home_airport_id: aircraft.css('Home').text,
         sale_price: aircraft.css('SalePrice').text,
+        fees_owed: aircraft.css('FeeOwed').text,
         has_ifr_equipment: aircraft.css('Equipment').text.include?('IFR'),
         has_autopilot: aircraft.css('Equipment').text.include?('AP'),
         has_gps: aircraft.css('Equipment').text.include?('GPS'),

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_06_155454) do
+ActiveRecord::Schema.define(version: 2018_06_18_143818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_155454) do
     t.string "icao_code", limit: 4, null: false
     t.decimal "engine_price"
     t.integer "fse_update_frequency", default: 0
+    t.boolean "report_for_sale", default: false
     t.index ["fse_update_frequency"], name: "index_aircraft_models_on_fse_update_frequency"
     t.index ["icao_code"], name: "index_aircraft_models_on_icao_code"
     t.index ["name"], name: "index_aircraft_models_on_name"
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_155454) do
     t.boolean "has_ifr_equipment", default: false
     t.boolean "has_autopilot", default: false
     t.boolean "has_gps", default: false
+    t.decimal "fees_owed"
     t.index ["aircraft_model_id"], name: "index_aircrafts_on_aircraft_model_id"
     t.index ["current_airport_id"], name: "index_aircrafts_on_current_airport_id"
     t.index ["home_airport_id"], name: "index_aircrafts_on_home_airport_id"
