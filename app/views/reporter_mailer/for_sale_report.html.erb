@@ -7,6 +7,7 @@
                 <th>Registration</th>
                 <th>Price</th>
                 <th>Fees Owed</th>
+                <th>Equipment</th>
                 <th>Location</th>
                 <th>Airframe Time</th>
                 <th>Engine Time</th>
@@ -19,6 +20,7 @@
                     <td><%= link_to aircraft.registration, "http://server.fseconomy.net/aircraftlog.jsp?id=#{aircraft.id}" %></td>
                     <td><%= number_to_currency aircraft.sale_price %></td>
                     <td><%= number_to_currency aircraft.fees_owed %></td>
+                    <td><%= aircraft.equipment %></td>
                     <td><%= link_to aircraft.current_airport_id, "http://server.fseconomy.net/airport.jsp?icao=#{aircraft.current_airport_id}" %></td>
                     <td><%= format_time aircraft.airframe_time %></td>
                     <td><%= format_time aircraft.engine_time %></td>

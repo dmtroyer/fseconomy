@@ -13,6 +13,30 @@ RSpec.describe Aircraft, type: :model do
     end
   end
 
+  describe 'equipment' do
+    it 'displays IFR or VFR' do
+      aircraft.has_ifr_equipment = true
+      expect(aircraft.equipment).to eq('IFR')
+      aircraft.has_ifr_equipment = false
+      expect(aircraft.equipment).to eq('VFR')
+    end
+
+    it 'displays autopilot' do
+      aircraft.has_autopilot = true
+      expect(aircraft.equipment).to eq('VFR/AP')
+    end
+
+    it 'displays gps' do
+      aircraft.has_gps = true
+      expect(aircraft.equipment).to eq('VFR/GPS')
+    end
+
+    it 'displays ifr, ap and gps' do
+      aircraft.has_ifr_equipment = aircraft.has_autopilot = aircraft.has_gps = true
+      expect(aircraft.equipment).to eq('IFR/AP/GPS')
+    end
+  end
+
   describe 'icao_code' do
     it 'is the aircraft models icao code' do
       expect(aircraft.icao_code).to eq(aircraft.aircraft_model.icao_code)

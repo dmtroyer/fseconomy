@@ -5,7 +5,14 @@ class Aircraft < ApplicationRecord
   belongs_to :current_airport, class_name: 'Airport', optional: true
   belongs_to :home_airport, class_name: 'Airport'
 
-  scope :for_sale, -> { where('sale_price > 0').order(:sale_price) }
+  scope :for_sale, -> { where('sale_price > 10').order(:sale_price) }
+
+  def equipment
+    equipment = has_ifr_equipment ? 'IFR' : 'VFR'
+    equipment += '/AP' if has_autopilot
+    equipment += '/GPS' if has_gps
+    equipment
+  end
 
   def icao_code
     aircraft_model.icao_code
