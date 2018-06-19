@@ -32,12 +32,22 @@
           search=""
           :customFilter="customFilter">
           <template slot="items" slot-scope="aircraft">
-            <td>{{ aircraft.item.registration }}</td>
-            <td>{{ aircraft.item.rental_cost_dry | currency }}</td>
-            <td>{{ aircraft.item.rental_cost_wet | currency }}</td>
-            <td>{{ aircraft.item.distance_bonus | currency }}</td>
-            <td><a v-bind:href="fseAirportLink(aircraft.item.current_airport_id)" target="_blank">{{ aircraft.item.current_airport_id }}</a></td>
-            <td><a v-bind:href="fseAirportLink(aircraft.item.home_airport_id)" target="_blank">{{ aircraft.item.home_airport_id }}</a></td>
+            <tr @click="aircraft.expanded = !aircraft.expanded">
+              <td>{{ aircraft.item.registration }}</td>
+              <td>{{ aircraft.item.rental_cost_dry | currency }}</td>
+              <td>{{ aircraft.item.rental_cost_wet | currency }}</td>
+              <td>{{ aircraft.item.distance_bonus | currency }}</td>
+              <td><a v-bind:href="fseAirportLink(aircraft.item.current_airport_id)" target="_blank">{{ aircraft.item.current_airport_id }}</a></td>
+              <td><a v-bind:href="fseAirportLink(aircraft.item.home_airport_id)" target="_blank">{{ aircraft.item.home_airport_id }}</a></td>
+            </tr>
+          </template>
+          <template slot="expand" slot-scope="aircraft">
+            <v-card flat class="green lighten-3">
+              <v-card-text>
+                <span><b>Owner:</b> {{ aircraft.item.owner }}</span>
+                <span><b>Equipment:</b> {{ aircraft.item.equipment }}</span>
+              </v-card-text>
+            </v-card>
           </template>
         </v-data-table>
       </v-container>
