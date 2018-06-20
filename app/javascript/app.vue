@@ -56,7 +56,15 @@
       <span>&copy; 2018</span>
       <v-spacer></v-spacer>
       <transition name="fade">
-        <span v-if="selected_model">{{ selected_model.name }} {{ selected_model.last_fse_update ? 'was' : 'was never' }} updated from FSE {{ selected_model.last_fse_update | moment("from") }}</span>
+        <span v-if="selected_model">
+          {{ selected_model.name }} {{ selected_model.last_fse_update ? 'was' : 'was never' }} updated from FSE {{ selected_model.last_fse_update | moment("from") }}
+          <v-btn small color="info"
+            :disabled="aircrafts_loading"
+            @click.native="refreshAircraftModel()"
+          >
+            Refresh
+          </v-btn>
+        </span>
       </transition>
     </v-footer>
   </v-app>
@@ -68,6 +76,7 @@
   export default {
     data () {
       return {
+        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         color: 'green darken-1',
         fixed: true,
         headers: [
@@ -97,8 +106,23 @@
       fseAirportLink (icao_code) {
         return 'http://server.fseconomy.net/airport.jsp?icao=' + icao_code;
       },
+      refreshAircraftModel () {
+        this.aircrafts_loading = true;
+        axios
+          .post('aircraft_models/' + this.selected_model.icao_code + '/aircrafts/import.json')
+          .then(response => {
+            this.selected_model.last_fse_update = response.data.aircraft_model.last_fse_update;
+            this.aircrafts = response.data.aircrafts;
+            this.aircrafts_loading = false;
+          })
+          .catch(error => {
+            console.log(error);
+            this.aircrafts_loading = false;
+          });
+      },
       selectAircraftModel (model) {
         this.aircrafts_loading = true;
+        this.aircrafts = [];
         axios
           .get('aircraft_models/' + model.icao_code + '/aircrafts.json')
           .then(response => {
@@ -112,6 +136,7 @@
       }
     },
     mounted () {
+      axios.defaults.headers.post['X-CSRF-Token'] = this.csrf;
       axios
         .get('aircraft_models.json')
         .then(response => {

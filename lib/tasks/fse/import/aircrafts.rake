@@ -13,7 +13,8 @@ namespace :fse do
 
       desc 'Import Aircrafts for a type from FSEconomy'
       task :by_icao_code, [:icao_code] => [:environment] do |task, args|
-        results = AircraftsImporter.import(args.icao_code)
+        aircraft_model = AircraftModel.find(args.icao_code)
+        results = AircraftsImporter.import(aircraft_model)
         puts "#{results[:aircrafts].count} #{args.icao_code} aircraft imported."
 
         if results[:invalids].count then

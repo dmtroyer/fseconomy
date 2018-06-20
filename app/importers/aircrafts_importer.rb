@@ -2,19 +2,16 @@ require 'open-uri'
 
 class AircraftsImporter < FseImporter
 
-  def self.import(icao_code)
-    model = AircraftModel.find_by(icao_code: icao_code)
-    raise "Cannot find the #{icao_code} model in the database." if model.nil?
-
+  def self.import(aircraft_model)
     aircrafts = []
     invalids = []
-    xml_doc = Nokogiri::XML(open(uri(model.name)))
+    xml_doc = Nokogiri::XML(open(uri(aircraft_model.name)))
 
     xml_doc.css('Aircraft').each do |aircraft|
       aircraft = Aircraft.new(
         id: aircraft.css('SerialNumber').text,
         registration: aircraft.css('Registration').text,
-        aircraft_model: model,
+        aircraft_model: aircraft_model,
         owner: aircraft.css('Owner').text,
         current_airport_id: aircraft.css('Location').text == 'In Flight' ? nil : aircraft.css('Location').text,
         home_airport_id: aircraft.css('Home').text,
@@ -43,11 +40,11 @@ class AircraftsImporter < FseImporter
     end
 
     Aircraft.transaction do
-      Aircraft.lock.where(aircraft_model: model).delete_all
+      Aircraft.lock.where(aircraft_model: aircraft_model).delete_all
       Aircraft.import(aircrafts, validate: false)
     end
 
-    model.update_attribute(:last_fse_update, DateTime.now)
+    aircraft_model.update_attribute(:last_fse_update, DateTime.now)
 
     { aircrafts: aircrafts, invalids: invalids }
   end
