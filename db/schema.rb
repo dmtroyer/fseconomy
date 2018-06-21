@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_143818) do
+ActiveRecord::Schema.define(version: 2018_06_21_191321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_06_18_143818) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "airport_type"
+    t.integer "empty_lots"
     t.index ["icao_code"], name: "index_airports_on_icao_code", unique: true
   end
 
