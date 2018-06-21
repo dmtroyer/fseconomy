@@ -113,26 +113,18 @@
           .then(response => {
             this.selected_model.last_fse_update = response.data.aircraft_model.last_fse_update;
             this.aircrafts = response.data.aircrafts;
-            this.aircrafts_loading = false;
           })
-          .catch(error => {
-            console.log(error);
-            this.aircrafts_loading = false;
-          });
+          .catch(error => { console.log(error); })
+          .finally(() => { this.aircrafts_loading = false; });
       },
       selectAircraftModel (model) {
         this.aircrafts_loading = true;
         this.aircrafts = [];
         axios
           .get('aircraft_models/' + model.icao_code + '/aircrafts.json')
-          .then(response => {
-            this.aircrafts = response.data;
-            this.aircrafts_loading = false;
-          })
-          .catch(error => {
-            console.log(error);
-            this.aircrafts_loading = false;
-          });
+          .then(response => { this.aircrafts = response.data; })
+          .catch(error => { console.log(error); })
+          .finally(() => { this.aircrafts_loading = false; });
       }
     },
     mounted () {
